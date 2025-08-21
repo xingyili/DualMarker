@@ -16,9 +16,6 @@ DualMarker is a biomarker recognition algorithm.
 
 * **MATLAB** R2020a or later (R2021b+ recommended)
 * **Statistics and Machine Learning Toolbox** (for standardization & classifier; you can also use `TreeBagger`)
-* **Parallel Computing Toolbox** *(optional)* for faster repeated CV
-
-> The repository includes implementations of `classRF_train/classRF_predict` and `AUC`. If you prefer MATLAB’s native classifier, replace them with `TreeBagger/predict` (an example is provided below).
 
 ---
 
