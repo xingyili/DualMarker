@@ -44,37 +44,27 @@ The repository is organized as follows:
   `getRandNEemb_in.m` / `RandNE_*`, `Obtain_StatisticScore.m`, `TransitionFields.m`, `GS.m`, …
 * `Data/`
 
-  **One packaged `.mat` file** with everything needed to run DualMarker and the CV script (see below).
+  **One packaged `.mat` file** with everything needed to run DualMarker.
 
 ---
 
 ### Data
 
-We provide a single packaged file (example name):
+We provide a packaged file (example name):
 
 ```
-Data/DualMarker_demo.mat
+Data/initavalue2.mat
 ```
 
-#### This `.mat` contains all required variables:
+This `.mat` file bundles all inputs needed to run DualMarker:
 
-* **Heterogeneous network adjacency**
-
-  `AdjGfG, AdjGfP, AdjGfD, AdjGfGO, AdjPfP, AdjPfD, AdjDfD, AdjDfGO, AdjGOfGO`
-* **Expression matrix & gene list**
-
-  `GSE2034`, `Genelist`
-* **DisGeNET prior**
-
-  `breastGenediease`
-
-> If you use your own data, simply load a `.mat` that defines the variables above with the same names.
-
----
+* **Heterogeneous network adjacency:** a single sparse block matrix encoding edges among genes, proteins, diseases, and GO terms (e.g., gene–gene, gene–protein, protein–protein, gene–disease, gene–GO). Used to build the dual-layer network and for propagation.
+* **Expression matrix & gene list:** normalized gene expression values (samples × genes) with matching gene identifiers. Used to compute differential signals and for 5-fold cross-validation.
+* **DisGeNET prior:** disease–gene relevance scores that act as prior seeds to guide the propagation and ranking.
 
 ### Running DualMarker
 
-#### 1) Produce the biomarker ranking
+**1) Produce the biomarker ranking**
 
 ```matlab
 addpath(genpath(pwd));                % add repo to MATLAB path
@@ -84,30 +74,19 @@ run('DualMarkerMainCode.m');          % produces variable "geneRANK"
 head(geneRANK);                       % [gene, score] sorted descending
 ```
 
-#### 2) 5-fold CV (50 repeats) at Top-50/100/150
+**2) 5-fold CV (50 repeats) at Top-100/150/200**
 
 ```matlab
 % Requires "geneRANK" from the step above
 run('KFoldCrossValidation.m');
 ```
 
-The script prints each repeat’s 5-fold mean AUC and the final means, e.g.:
-
-```
-[Repeat 50/50] AUC@50=0.8421 | AUC@100=0.8615 | AUC@150=0.8576
-
-Final Mean AUC Values:
-Top-50:  0.8384
-Top-100: 0.8570
-Top-150: 0.8531
-```
-
 **(Optional) Save the AUC lists**
 
 ```matlab
-writematrix(GSE2034_aucScore_list_50,  'GSE2034_top50_auc.csv');
 writematrix(GSE2034_aucScore_list_100, 'GSE2034_top100_auc.csv');
 writematrix(GSE2034_aucScore_list_150, 'GSE2034_top150_auc.csv');
+writematrix(GSE2034_aucScore_list_200,  'GSE2034_top200_auc.csv');
 ```
 
 ---
