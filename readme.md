@@ -36,7 +36,7 @@ The repository is organized as follows:
   4. Output final **biomarker ranking** in variable `geneRANK`.
 * `KFoldCrossValidation.m`
 
-  **Repeated 5-fold cross-validation** (default  **50 repeats × 5 folds** ) on **Top-50/100/150** features selected from `geneRANK`. Trains a classifier (random forest by default) and reports AUC for each repeat as well as the final mean AUCs.
+  **Repeated 5-fold cross-validation** (default  **50 repeats × 5 folds** ) on **Top-100/150/200** features selected from `geneRANK`. Trains a classifier (random forest by default) and reports AUC for each repeat as well as the final mean AUCs.
 * Core utilities
 
   `A_RWRplus.m`, `Network_Enhancement.m`, `getNormalizedMatrix_Heter.m`,
